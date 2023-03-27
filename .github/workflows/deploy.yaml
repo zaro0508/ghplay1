@@ -1,0 +1,47 @@
+name: try
+
+#on:
+#  push:
+#    branches: [ '*' ]
+#    tags: [ 'v[0-9]+\.[0-9]+\.[0-9]+' ]
+#  pull_request:
+#    branches: [ '*' ]
+
+on:
+  push:
+    branches: ["**"]
+
+jobs:
+  parallel:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        option:
+          - a
+          - b
+
+    steps:
+      - name: output
+        id: output
+        run: |
+          echo "${{ matrix.option }}=${{ matrix.option }}" >> $GITHUB_OUTPUT
+
+    outputs:
+      a: ${{ steps.output.outputs.a }}
+      b: ${{ steps.output.outputs.b }}
+
+  finally:
+    needs: parallel
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        option: ${{ needs.parallel.outputs.* }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: debug
+        run: echo '${{ toJSON(needs.parallel.outputs) }}'
