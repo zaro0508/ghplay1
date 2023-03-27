@@ -1,15 +1,15 @@
 name: try
 
-#on:
-#  push:
-#    branches: [ '*' ]
-#    tags: [ 'v[0-9]+\.[0-9]+\.[0-9]+' ]
-#  pull_request:
-#    branches: [ '*' ]
-
 on:
   push:
-    branches: ["**"]
+    branches: [ '*' ]
+    tags: [ 'v[0-9]+\.[0-9]+\.[0-9]+' ]
+  pull_request:
+    branches: [ '*' ]
+
+#on:
+#  push:
+#    branches: ["**"]
 
 jobs:
   parallel:
@@ -34,10 +34,14 @@ jobs:
   finally:
     needs: parallel
     runs-on: ubuntu-latest
+#    if: github.ref == 'refs/heads/main'
 
     strategy:
       matrix:
-        option: ${{ needs.parallel.outputs.* }}
+#        option: ${{ needs.parallel.outputs.* }}
+        option:
+          - c
+          - d
 
     steps:
       - name: checkout
