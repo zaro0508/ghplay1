@@ -20,14 +20,14 @@ jobs:
     with:
       target: ${{ matrix.target }}
 
-  MatrixJobB:
-    needs: MatrixJobA
-    strategy:
-      matrix:
-        target: [c, d]
-    uses: ./.github/workflows/build.yaml
-    with:
-      target: ${{ matrix.target }}
+#  MatrixJobB:
+#    needs: MatrixJobA
+#    strategy:
+#      matrix:
+#        target: [c, d]
+#    uses: ./.github/workflows/build.yaml
+#    with:
+#      target: ${{ matrix.target }}
 
 #  parallel:
 #    runs-on: ubuntu-latest
