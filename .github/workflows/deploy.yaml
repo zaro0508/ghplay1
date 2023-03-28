@@ -1,4 +1,4 @@
-name: try
+name: deploy
 
 on:
   push:
@@ -12,40 +12,57 @@ on:
 #    branches: ["**"]
 
 jobs:
-  parallel:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        option:
-          - a
-          - b
-
-    steps:
-      - name: output
-        id: output
-        run: |
-          echo "${{ matrix.option }}=${{ matrix.option }}" >> $GITHUB_OUTPUT
-
-    outputs:
-      a: ${{ steps.output.outputs.a }}
-      b: ${{ steps.output.outputs.b }}
-
-  finally:
-    needs: parallel
-    runs-on: ubuntu-latest
-#    if: github.ref == 'refs/heads/main'
-
+  MatrixJobA:
     strategy:
       matrix:
-#        option: ${{ needs.parallel.outputs.* }}
-        option:
-          - c
-          - d
+        target: [a, b]
+    uses: ./.github/workflows/build.yaml
+    with:
+      target: ${{ matrix.target }}
 
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
+  MatrixJobB:
+    needs: MatrixJobA
+    strategy:
+      matrix:
+        target: [c, d]
+    uses: ./.github/workflows/build.yaml
+    with:
+      target: ${{ matrix.target }}
 
-      - name: debug
-        run: echo '${{ toJSON(needs.parallel.outputs) }}'
+#  parallel:
+#    runs-on: ubuntu-latest
+#    strategy:
+#      fail-fast: true
+#      matrix:
+#        option:
+#          - a
+#          - b
+#
+#    steps:
+#      - name: output
+#        id: output
+#        run: |
+#          echo "${{ matrix.option }}=${{ matrix.option }}" >> $GITHUB_OUTPUT
+#
+#    outputs:
+#      a: ${{ steps.output.outputs.a }}
+#      b: ${{ steps.output.outputs.b }}
+#
+#  finally:
+#    needs: parallel
+#    runs-on: ubuntu-latest
+##    if: github.ref == 'refs/heads/main'
+#
+#    strategy:
+#      matrix:
+##        option: ${{ needs.parallel.outputs.* }}
+#        option:
+#          - c
+#          - d
+#
+#    steps:
+#      - name: checkout
+#        uses: actions/checkout@v3
+#
+#      - name: debug
+#        run: echo '${{ toJSON(needs.parallel.outputs) }}'
