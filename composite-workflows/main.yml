@@ -1,0 +1,18 @@
+# not a preferable solution because the workflow visualization is not
+# good on GH web console UI
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - uses: actions/checkout@v3
+      - id: foo
+      # needs to be a repo, GH error
+      # Error: .github#L1 (the `uses' attribute must be a path, a Docker image, or owner/repo@ref)
+        uses: .github/workflows/action.yml
+        with:
+          who-to-greet: 'Mona the Octocat'
+      - run: echo random-number ${{ steps.foo.outputs.random-number }}
+        shell: bash
