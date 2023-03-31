@@ -21,15 +21,29 @@ on:
   workflow_call:
 
 jobs:
-  example_job:
-    name: Generate output
+  parallel:
     runs-on: ubuntu-latest
-    # Map the job outputs to step outputs
-    outputs:
-      output1: ${{ steps.step1.outputs.firstword }}
-      output2: ${{ steps.step2.outputs.secondword }}
+    strategy:
+      fail-fast: true
+      matrix:
+        option:
+          - a
+          - b
     steps:
-      - id: step1
-        run: echo "firstword=hello" >> $GITHUB_OUTPUT
-      - id: step2
-        run: echo "secondword=world" >> $GITHUB_OUTPUT
+      - name: output
+        id: output
+        run: |
+          echo "${{ matrix.option }}=${{ matrix.option }}" >> $GITHUB_OUTPUT
+          
+  # example_job:
+  #   name: Generate output
+  #   runs-on: ubuntu-latest
+  #   # Map the job outputs to step outputs
+  #   outputs:
+  #     output1: ${{ steps.step1.outputs.firstword }}
+  #     output2: ${{ steps.step2.outputs.secondword }}
+  #   steps:
+  #     - id: step1
+  #       run: echo "firstword=hello" >> $GITHUB_OUTPUT
+  #     - id: step2
+  #       run: echo "secondword=world" >> $GITHUB_OUTPUT
