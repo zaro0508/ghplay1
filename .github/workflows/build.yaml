@@ -11,6 +11,12 @@ name: Reusable workflow
 #         description: "The second output string"
 #         value: ${{ jobs.example_job.outputs.output2 }}
 
+on:
+  push:
+    branches: [ '*' ]
+  pull_request:
+    branches: [ '*' ]  
+    
 jobs:
   example_job:
     name: Generate output
