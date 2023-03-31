@@ -1,25 +1,34 @@
-# deploy workflow waits until build workflow is complete before running 
 name: deploy
 
-# on:
-#   workflow_dispatch:
-
 on:
-  workflow_run:
-    workflows: ["build"]
-    branches: ["master"]
-    types:
-      - completed
-
-# concurrency:
-#   group: ${{ github.workflow }}
+  push:
+    paths-ignore:
+      - '**.md'
 
 jobs:
-  job2:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    permissions:
-      id-token: write
-      contents: read    
+  deploy:
+    name: Deploy CloudFormation templates and configure Tower
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        job-environment:
+          - workflows-nextflow-dev
+          - workflows-nextflow-prod
+          - org-sagebase-strides-ampad-workflows
+        include:
+          - job-environment: workflows-nextflow-dev
+            sceptre-suffix: dev
+            tower-url: https://tower-dev.sagebionetworks.org
+          - job-environment: workflows-nextflow-prod
+            sceptre-suffix: prod
+            tower-url: https://tower.sagebionetworks.org
+          - job-environment: org-sagebase-strides-ampad-workflows
+            sceptre-suffix: ampad
+            tower-url: https://tower.sagebionetworks.org
+    environment: ${{ matrix.job-environment }}
     steps:
-      - run: echo ${{ needs.job1.outputs.firstword }} ${{ needs.job1.outputs.secondword }}
+      - name: output
+        id: output
+        run: |
+          echo "${{ matrix.sceptre-suffix }}=${{ matrix.sceptre-suffix }}" >> $GITHUB_OUTPUT
+          export

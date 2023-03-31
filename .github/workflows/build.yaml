@@ -1,65 +1,50 @@
 name: build
 
-# on:
-#   workflow_call:
-#     # Map the workflow outputs to job outputs
-#     outputs:
-#       firstword:
-#         description: "The first output string"
-#         value: ${{ jobs.example_job.outputs.output1 }}
-#       secondword:
-#         description: "The second output string"
-#         value: ${{ jobs.example_job.outputs.output2 }}
+on:
+  workflow_call:
+    # Map the workflow outputs to job outputs
+    outputs:
+      firstword:
+        description: "The first output string"
+        value: ${{ jobs.example_job.outputs.output1 }}
+      secondword:
+        description: "The second output string"
+        value: ${{ jobs.example_job.outputs.output2 }}
 
 # on:
 #   push:
 #     branches: [ '*' ]
 #   pull_request:
-#     branches: [ '*' ]
+#     branches: [ '*' ]  
 
-on:
-  pull_request:
-    branches: ['*']
-  push:
-    branches: ['*']
+# on:
+#   workflow_call:
 
 jobs:
-  buildA:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        option:
-          - a
-          - b
-    steps:
-      - name: output
-        id: output
-        run: |
-          echo "${{ matrix.option }}=${{ matrix.option }}" >> $GITHUB_OUTPUT
-  buildB:
-    needs: buildA
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        option:
-          - c
-    steps:
-      - name: output
-        id: output
-        run: |
-          echo "${{ matrix.option }}=${{ matrix.option }}" >> $GITHUB_OUTPUT
 
-  # example_job:
-  #   name: Generate output
-  #   runs-on: ubuntu-latest
-  #   # Map the job outputs to step outputs
-  #   outputs:
-  #     output1: ${{ steps.step1.outputs.firstword }}
-  #     output2: ${{ steps.step2.outputs.secondword }}
-  #   steps:
-  #     - id: step1
-  #       run: echo "firstword=hello" >> $GITHUB_OUTPUT
-  #     - id: step2
-  #       run: echo "secondword=world" >> $GITHUB_OUTPUT
+#   parallel:
+#     runs-on: ubuntu-latest
+#     strategy:
+#       fail-fast: true
+#       matrix:
+#         option:
+#           - a
+#           - b
+#     steps:
+#       - name: output
+#         id: output
+#         run: |
+#           echo "${{ matrix.option }}=${{ matrix.option }}" >> $GITHUB_OUTPUT
+          
+  example_job:
+    name: Generate output
+    runs-on: ubuntu-latest
+    # Map the job outputs to step outputs
+    outputs:
+      output1: ${{ steps.step1.outputs.firstword }}
+      output2: ${{ steps.step2.outputs.secondword }}
+    steps:
+      - id: step1
+        run: echo "firstword=hello" >> $GITHUB_OUTPUT
+      - id: step2
+        run: echo "secondword=world" >> $GITHUB_OUTPUT
