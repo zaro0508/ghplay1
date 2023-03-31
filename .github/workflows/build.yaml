@@ -1,49 +1,23 @@
-name: Reusable workflow
-
-# on:
-#   workflow_call:
-#     # Map the workflow outputs to job outputs
-#     outputs:
-#       firstword:
-#         description: "The first output string"
-#         value: ${{ jobs.example_job.outputs.output1 }}
-#       secondword:
-#         description: "The second output string"
-#         value: ${{ jobs.example_job.outputs.output2 }}
-
-# on:
-#   push:
-#     branches: [ '*' ]
-#   pull_request:
-#     branches: [ '*' ]  
-
-on:
-  workflow_call:
-
-jobs:
-  parallel:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        option:
-          - a
-          - b
-    steps:
-      - name: output
-        id: output
-        run: |
-          echo "${{ matrix.option }}=${{ matrix.option }}" >> $GITHUB_OUTPUT
-          
-  # example_job:
-  #   name: Generate output
-  #   runs-on: ubuntu-latest
-  #   # Map the job outputs to step outputs
-  #   outputs:
-  #     output1: ${{ steps.step1.outputs.firstword }}
-  #     output2: ${{ steps.step2.outputs.secondword }}
-  #   steps:
-  #     - id: step1
-  #       run: echo "firstword=hello" >> $GITHUB_OUTPUT
-  #     - id: step2
-  #       run: echo "secondword=world" >> $GITHUB_OUTPUT
+name: 'Hello World'
+description: 'Greet someone'
+inputs:
+  who-to-greet:  # id of input
+    description: 'Who to greet'
+    required: true
+    default: 'World'
+outputs:
+  random-number:
+    description: "Random number"
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  steps:
+    - run: echo Hello ${{ inputs.who-to-greet }}.
+      shell: bash
+    - id: random-number-generator
+      run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
+      shell: bash
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - run: goodbye.sh
+      shell: bash
