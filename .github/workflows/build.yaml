@@ -24,7 +24,7 @@ on:
     branches: ['*']
 
 jobs:
-  parallel:
+  buildA:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -32,6 +32,18 @@ jobs:
         option:
           - a
           - b
+    steps:
+      - name: output
+        id: output
+        run: |
+          echo "${{ matrix.option }}=${{ matrix.option }}" >> $GITHUB_OUTPUT
+  buildB:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        option:
+          - c
     steps:
       - name: output
         id: output
