@@ -6,7 +6,10 @@ on:
       - '**.md'
 
 jobs:
+  job1:
+    uses: ./.github/workflows/build.yaml
   deploy:
+    needs: job1
     name: Deploy CloudFormation templates and configure Tower
     runs-on: ubuntu-latest
     strategy:
