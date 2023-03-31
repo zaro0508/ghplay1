@@ -15,10 +15,13 @@ name: Reusable workflow
 #   push:
 #     branches: [ '*' ]
 #   pull_request:
-#     branches: [ '*' ]  
+#     branches: [ '*' ]
 
 on:
-  workflow_call:
+  pull_request:
+    branches: ['*']
+  push:
+    branches: ['*']
 
 jobs:
   parallel:
@@ -34,7 +37,7 @@ jobs:
         id: output
         run: |
           echo "${{ matrix.option }}=${{ matrix.option }}" >> $GITHUB_OUTPUT
-          
+
   # example_job:
   #   name: Generate output
   #   runs-on: ubuntu-latest
