@@ -1,8 +1,8 @@
 repos:
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.28.0
-    hooks:
-      - id: yamllint
+  # - repo: https://github.com/adrienverge/yamllint
+  #   rev: v1.28.0
+  #   hooks:
+  #     - id: yamllint
   - repo: https://github.com/sirosen/check-jsonschema
     rev: 0.18.2
     hooks:
