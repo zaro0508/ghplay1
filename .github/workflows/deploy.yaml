@@ -10,11 +10,12 @@ on:
     types:
       - completed
 
-concurrency:
-  group: ${{ github.workflow }}
-  
+# concurrency:
+#   group: ${{ github.workflow }}
+
 jobs:
   job2:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     needs: job1
     steps:
