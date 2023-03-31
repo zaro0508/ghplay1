@@ -35,3 +35,6 @@ jobs:
         run: |
           echo "${{ matrix.sceptre-suffix }}=${{ matrix.sceptre-suffix }}" >> $GITHUB_OUTPUT
           export
+  job2:
+    needs: deploy
+    uses: ./.github/workflows/build.yaml
