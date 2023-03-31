@@ -38,6 +38,7 @@ jobs:
         run: |
           echo "${{ matrix.option }}=${{ matrix.option }}" >> $GITHUB_OUTPUT
   buildB:
+    needs: buildA
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
