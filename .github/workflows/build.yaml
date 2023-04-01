@@ -50,7 +50,6 @@ jobs:
   #       run: echo "secondword=world" >> $GITHUB_OUTPUT
 
   deploy:
-    needs: job1
     name: Deploy CloudFormation templates and configure Tower
     runs-on: ubuntu-latest
     strategy:
