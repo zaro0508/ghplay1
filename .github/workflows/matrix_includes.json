@@ -1,7 +1,7 @@
 [
     {
         "runs_on":"ubuntu-latest",        
-        "runOnBranch":"main"
+        "runOnBranch":"always"
     },
     {
         "runs_on":"windows-latest",        
