@@ -6,35 +6,5 @@ on:
       - '**.md'
 
 jobs:
-  job1:
-    uses: ./.github/workflows/build.yaml
   deploy:
-    needs: job1
-    name: Deploy CloudFormation templates and configure Tower
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        job-environment:
-          - workflows-nextflow-dev
-          - workflows-nextflow-prod
-          - org-sagebase-strides-ampad-workflows
-        include:
-          - job-environment: workflows-nextflow-dev
-            sceptre-suffix: dev
-            tower-url: https://tower-dev.sagebionetworks.org
-          - job-environment: workflows-nextflow-prod
-            sceptre-suffix: prod
-            tower-url: https://tower.sagebionetworks.org
-          - job-environment: org-sagebase-strides-ampad-workflows
-            sceptre-suffix: ampad
-            tower-url: https://tower.sagebionetworks.org
-    environment: ${{ matrix.job-environment }}
-    steps:
-      - name: output
-        id: output
-        run: |
-          echo "${{ matrix.sceptre-suffix }}=${{ matrix.sceptre-suffix }}" >> $GITHUB_OUTPUT
-          export
-  job2:
-    needs: deploy
     uses: ./.github/workflows/build.yaml
