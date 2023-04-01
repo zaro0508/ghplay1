@@ -8,14 +8,13 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      # Required as the JSON input file needs to be read
-      - uses: actions/checkout@v2      
+      - uses: actions/checkout@v2
+      - uses: nelonoel/branch-name@v1.0.1
       - id: set-matrix
         uses: JoshuaTheMiller/conditional-build-matrix@main        
-        with:
-          # inputFile: '.github/workflows/matrix_includes.json' # Default input file path
-          filter: '[?runOnBranch==`${{ github.ref }}` || runOnBranch==`always`]'
-          # addInclude: true
+        with:          
+          # The simple branch name can be used in the filter now!
+          filter: '[?runOnBranch==`${{ env.BRANCH_NAME }}` || runOnBranch==`always`]'   
   build:
     needs: matrix_prep
     strategy:      
