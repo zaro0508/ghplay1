@@ -14,7 +14,9 @@ jobs:
         uses: JoshuaTheMiller/conditional-build-matrix@main        
         with:          
           # The simple branch name can be used in the filter now!
+          # inputFile: '.github/workflows/matrix_includes.json' # Default input file path
           filter: '[?runOnBranch==`${{ env.BRANCH_NAME }}` || runOnBranch==`always`]'   
+          addInclude: true
   build:
     needs: matrix_prep
     strategy:      
