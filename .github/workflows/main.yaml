@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "jinja-lint"
-  dev:
+  deploy-dev:
     if: github.ref == 'refs/heads/main'
     needs:
       - pre-commit
@@ -27,7 +27,7 @@ jobs:
       job-environment: "workflows-nextflow-dev"
       sceptre-suffix: "dev"
       tower-url: "https://tower-dev.sagebionetworks.org"
-  prod:
+  deploy-prod:
     if: github.ref == 'refs/heads/main'
     needs: deploy-dev
     uses: "./.github/workflows/rw-deploy.yaml"
@@ -36,7 +36,7 @@ jobs:
       job-environment: "workflows-nextflow-prod"
       sceptre-suffix: "dev"
       tower-url: "https://tower.sagebionetworks.org"
-  ampad:
+  deploy-ampad:
     if: github.ref == 'refs/heads/main'
     needs: deploy-prod
     uses: "./.github/workflows/rw-deploy.yaml"
