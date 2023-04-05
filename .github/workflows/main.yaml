@@ -7,9 +7,6 @@ on:
     paths-ignore:
       - '**.md'
 
-env:
-  REUSABLE_DEPLOY_WORKFLOW_FILE: "./.github/workflows/rw-deploy.yaml"
-
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
@@ -19,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "jinja-lint"
-  deploy-dev:
+  dev:
     if: github.ref == 'refs/heads/main'
     needs:
       - pre-commit
@@ -30,7 +27,7 @@ jobs:
       job-environment: "workflows-nextflow-dev"
       sceptre-suffix: "dev"
       tower-url: "https://tower-dev.sagebionetworks.org"
-  deploy-prod:
+  prod:
     if: github.ref == 'refs/heads/main'
     needs: deploy-dev
     uses: "./.github/workflows/rw-deploy.yaml"
@@ -39,7 +36,7 @@ jobs:
       job-environment: "workflows-nextflow-prod"
       sceptre-suffix: "dev"
       tower-url: "https://tower.sagebionetworks.org"
-  deploy-ampad:
+  ampad:
     if: github.ref == 'refs/heads/main'
     needs: deploy-prod
     uses: "./.github/workflows/rw-deploy.yaml"
