@@ -1,0 +1,51 @@
+name: main
+
+on:
+  pull_request:
+    branches: [ '*' ]
+  push:
+    paths-ignore:
+      - '**.md'
+
+env:
+  REUSABLE_DEPLOY_WORKFLOW_FILE: "./.github/workflows/rw-deploy.yaml"
+
+jobs:
+  pre-commit:
+    name: Run pre-commit hooks against all files
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "pre-commit"
+  jinja-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "jinja-lint"
+  deploy-dev:
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - pre-commit
+      - jinja-lint
+    uses: ${{ REUSABLE_DEPLOY_WORKFLOW_FILE }}
+    secrets: inherit
+    with:
+      job-environment: "workflows-nextflow-dev"
+      sceptre-suffix: "dev"
+      tower-url: "https://tower-dev.sagebionetworks.org"
+  deploy-prod:
+    if: github.ref == 'refs/heads/main'
+    needs: deploy-dev
+    uses: ${{ REUSABLE_DEPLOY_WORKFLOW_FILE }}
+    secrets: inherit
+    with:
+      job-environment: "workflows-nextflow-prod"
+      sceptre-suffix: "dev"
+      tower-url: "https://tower.sagebionetworks.org"
+  deploy-ampad:
+    if: github.ref == 'refs/heads/main'
+    needs: deploy-prod
+    uses: ${{ REUSABLE_DEPLOY_WORKFLOW_FILE }}
+    secrets: inherit
+    with:
+      job-environment: "worg-sagebase-strides-ampad-workflows"
+      sceptre-suffix: "ampad"
+      tower-url: "https://tower.sagebionetworks.org"
