@@ -3,11 +3,24 @@ name: Call a reusable workflow and use its outputs
 # on:
 #   workflow_dispatch:
 
+#on:
+#  push:
+#    branches: [ '*' ]
+#  pull_request:
+#    branches: [ '*' ]
+
 on:
-  push:
-    branches: [ '*' ]
-  pull_request:
-    branches: [ '*' ]  
+  workflow_dispatch:
+    inputs:
+      build_id:
+        required: true
+        type: string
+      deploy_target:
+        required: true
+        type: string
+      perform_deploy:
+        required: true
+        type: boolean
 
 jobs:
   job1:
