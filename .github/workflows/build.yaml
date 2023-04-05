@@ -37,7 +37,7 @@ jobs:
       - name: output
         id: output
         run: |
-          echo "jobA"
+          echo "jobA - ${{ inputs.build_id }} ${{ inputs.deploy_target }}"
           
   # example_job:
   #   name: Generate output
