@@ -25,7 +25,7 @@ jobs:
     needs:
       - pre-commit
       - jinja-lint
-    uses: ${{ REUSABLE_DEPLOY_WORKFLOW_FILE }}
+    uses: ${{ env.REUSABLE_DEPLOY_WORKFLOW_FILE }}
     secrets: inherit
     with:
       job-environment: "workflows-nextflow-dev"
@@ -34,7 +34,7 @@ jobs:
   deploy-prod:
     if: github.ref == 'refs/heads/main'
     needs: deploy-dev
-    uses: ${{ REUSABLE_DEPLOY_WORKFLOW_FILE }}
+    uses: ${{ env.REUSABLE_DEPLOY_WORKFLOW_FILE }}
     secrets: inherit
     with:
       job-environment: "workflows-nextflow-prod"
@@ -43,7 +43,7 @@ jobs:
   deploy-ampad:
     if: github.ref == 'refs/heads/main'
     needs: deploy-prod
-    uses: ${{ REUSABLE_DEPLOY_WORKFLOW_FILE }}
+    uses: ${{ env.REUSABLE_DEPLOY_WORKFLOW_FILE }}
     secrets: inherit
     with:
       job-environment: "worg-sagebase-strides-ampad-workflows"
