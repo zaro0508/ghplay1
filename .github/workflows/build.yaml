@@ -26,24 +26,18 @@ on:
       deploy_target:
         required: true
         type: string
-      perform_deploy:
-        required: true
-        type: boolean
+#      perform_deploy:
+#        required: true
+#        type: boolean
 
 jobs:
-  parallel:
+  jobA:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        option:
-          - a
-          - b
     steps:
       - name: output
         id: output
         run: |
-          echo "${{ matrix.option }}=${{ matrix.option }}" >> $GITHUB_OUTPUT
+          echo "jobA"
           
   # example_job:
   #   name: Generate output
