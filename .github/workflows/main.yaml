@@ -12,7 +12,6 @@ env:
 
 jobs:
   pre-commit:
-    name: Run pre-commit hooks against all files
     runs-on: ubuntu-latest
     steps:
       - run: echo "pre-commit"
