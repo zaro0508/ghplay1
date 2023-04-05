@@ -18,7 +18,7 @@ name: Reusable workflow
 #     branches: [ '*' ]  
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       build_id:
         required: true
