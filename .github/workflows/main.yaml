@@ -47,7 +47,7 @@ jobs:
           mongoimport --version
 
       - name: run import data
-        run: ./import-data.sh $BRANCH $SYNAPSE_USERNAME $SYNAPSE_PASSWORD $DB_HOST $DB_USER $DB_PASS"
+        run: ./import-data.sh $BRANCH $SYNAPSE_USERNAME $SYNAPSE_PASSWORD $DB_HOST $DB_USER $DB_PASS
         env:
           BRANCH: ${{ github.ref_name }}
           SYNAPSE_USERNAME: ${{ secrets.SYNAPSE_USERNAME }}
