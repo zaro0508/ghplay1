@@ -44,4 +44,5 @@ jobs:
         run: |
           mongodump --version  
           mongorestore --version
-          mongoimport
+          mongoimport --version
+          
