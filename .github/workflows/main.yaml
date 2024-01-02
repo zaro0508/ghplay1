@@ -23,8 +23,12 @@ jobs:
         with:
           python-version: '3.10'
           cache: 'pip' # caching pip dependencies
-#      - run: pip install synapseclient[pandas,pysftp]
-        run: pip install -r requirements.txt
+##      - run: pip install synapseclient[pandas,pysftp]
+#        run: pip install -r requirements.txt
+      - uses: BSFishy/pip-action@v1
+        with:
+          packages: |
+            synapseclient[pandas,pysftp]
       # action-mongo-tools without parameters install both : mongo-tools and mongo-shell
       - name: Setup mongo tools - mongo-tools and mongo-shell
         uses: boly38/action-mongo-tools@stable
