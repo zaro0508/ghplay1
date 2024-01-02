@@ -10,6 +10,8 @@ jobs:
   mongo-tools-example-steps:
     # The type of runner that the job will run on https://github.com/actions/runner-images/tree/main/images/linux
     runs-on: ubuntu-22.04
+    environment:  # configure environment to match branch name
+      name: ${{ github.ref_name }}
 
     services:
       mongodb:
