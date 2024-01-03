@@ -21,7 +21,7 @@ echo "branch = $BRANCH, DB_HOST = $DB_HOST, DB_USER = $DB_HOST"
 #DATA_DIR=$WORKING_DIR/data
 #TEAM_IMAGES_DIR=$DATA_DIR/team_images
 
-synapse -u $SYNAPSE_USERNAME -p $SYNAPSE_PASSWORD login
+synapse login -u $SYNAPSE_USERNAME -p $SYNAPSE_PASSWORD
 
 ## Version key/value should be on his own line
 #DATA_VERSION=$(cat $WORKING_DIR/data-manifest.json | grep data-version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
