@@ -14,12 +14,12 @@ DB_PASS=$6
 
 echo "branch = $BRANCH, DB_HOST = $DB_HOST, DB_USER = $DB_HOST"
 
-CURRENT_DIR=$(pwd)
-PARENT_DIR="$(dirname "$CURRENT_DIR")"
-TMP_DIR=/tmp
-WORKING_DIR=$TMP_DIR/work
-DATA_DIR=$WORKING_DIR/data
-TEAM_IMAGES_DIR=$DATA_DIR/team_images
+#CURRENT_DIR=$(pwd)
+#PARENT_DIR="$(dirname "$CURRENT_DIR")"
+#TMP_DIR=/tmp
+#WORKING_DIR=$TMP_DIR/work
+#DATA_DIR=$WORKING_DIR/data
+#TEAM_IMAGES_DIR=$DATA_DIR/team_images
 
 synapse -u $SYNAPSE_USERNAME -p $SYNAPSE_PASSWORD login
 
