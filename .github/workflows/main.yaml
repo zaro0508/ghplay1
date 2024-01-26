@@ -6,9 +6,9 @@ on:
       - check
     types:
       - completed
-#    branches: ['master']
-  push:
     branches: ['master']
+#  push:
+#    branches: ['master']
 
 jobs:
   echo:
