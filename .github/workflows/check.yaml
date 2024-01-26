@@ -3,8 +3,6 @@ name: main
 on:
   pull_request:
     branches: [ '*' ]
-  push:
-    branches: ['*']
 
 jobs:
   echo:
