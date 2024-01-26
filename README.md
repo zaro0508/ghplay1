@@ -1,1 +1,1 @@
-Compare and contrast resuable workflow vs composite actions: https://dev.to/n3wt0n/composite-actions-vs-reusable-workflows-what-is-the-difference-github-actions-11kd
+A Compare and contrast resuable workflow vs composite actions: https://dev.to/n3wt0n/composite-actions-vs-reusable-workflows-what-is-the-difference-github-actions-11kd
