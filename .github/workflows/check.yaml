@@ -3,9 +3,11 @@ name: main
 on:
   pull_request:
     branches: [ '*' ]
+  push:
+    branches: [ '*' ]
 
 jobs:
-  echo:
+  check-echo:
     runs-on: ubuntu-latest
     steps:
       - run: echo "check job"
